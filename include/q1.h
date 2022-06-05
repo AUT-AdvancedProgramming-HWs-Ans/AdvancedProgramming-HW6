@@ -12,6 +12,7 @@ namespace q1
          * @param initialValue initial value of the variable
          * @param stepSize step size of the algorithm
          * @param f function to minimize
+         * 
          * @return T minimum value of the function
          */
 
