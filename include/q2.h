@@ -77,12 +77,47 @@ namespace q2
                                        static_cast<size_t>(std::stoi(match[4])),
                                        static_cast<size_t>(std::stoi(match[5])),
                                        static_cast<size_t>(std::stoi(match[6]))});
+
             txt = match.suffix().str();
         }
 
         return patients;
     }
 
-}
+    static auto cancerPossibilityCompersion{
+        [](const Patient &patient1, const Patient &patient2)
+        {
+            /**
+             * @brief compare the cancer possibility of two patients
+             *
+             * @param patient1 first patient
+             * @param patient2 second patient
+             *
+             * @return bool
+             */
+
+            auto possibilityOfCancer{[](const Patient &patient)
+                                     { return 3 * patient.age +
+                                              5 * patient.smokes +
+                                              2 * patient.area_q +
+                                              4 * patient.alkhol; }};
+
+            return possibilityOfCancer(patient1) > possibilityOfCancer(patient2);
+        }};
+
+    static void sort(std::vector<Patient> &patients)
+    {
+        /**
+         * @brief sort the vector of patients
+         *
+         * @param patients vector of patients
+         *
+         * @return std::vector<Patient>
+         */
+
+        std::sort(patients.begin(), patients.end(), cancerPossibilityCompersion);
+    }
+
+} // namespace q2
 
 #endif // Q2_H
