@@ -4,7 +4,7 @@
 namespace q1 {
 
 template <typename T, typename Func>
-T derivation(T x0, Func f, T epsilon)
+inline T derivation(T x0, Func f, T epsilon)
 {
     /**
      * @brief calculate the derivative of a function
@@ -20,7 +20,7 @@ T derivation(T x0, Func f, T epsilon)
 }
 
 template <typename T, typename Func>
-double gradient_descent(T initialValue, T stepSize, Func f = Func {})
+inline double gradient_descent(T initialValue, T stepSize, Func f = Func {})
 {
     /**
      * @brief gradient descent algorithm
