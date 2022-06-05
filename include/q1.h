@@ -36,16 +36,16 @@ inline double gradient_descent(T initialValue, T stepSize, Func f = Func {})
     T x { initialValue };
     T fx { f(x) };
 
-    T valueOfError { 0.001 };
+    T limitOfError { 0.001 };
     T func_dot {};
 
-    // Iterating until the error is smaller than valueOfError
+    // Iterating until the error is smaller than limitOfError
     do {
         // Calculating the derivative
-        func_dot = derivation(x, f, valueOfError);
+        func_dot = derivation(x, f, limitOfError);
         x -= stepSize * func_dot;
 
-    } while (std::abs(func_dot) > valueOfError);
+    } while (std::abs(func_dot) > limitOfError);
 
     // Method 2:
     /*
