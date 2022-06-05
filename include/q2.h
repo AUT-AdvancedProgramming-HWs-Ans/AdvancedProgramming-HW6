@@ -32,8 +32,6 @@ namespace q2
              * @param _smokes number of cigarettes smoked per day
              * @param _area_q area of quadrant
              * @param _alkhol number of years of alcohol consumed
-             *
-             * @return Patient
              */
         }
         std::string name;
