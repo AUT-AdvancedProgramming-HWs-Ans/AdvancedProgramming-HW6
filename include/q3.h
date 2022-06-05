@@ -98,7 +98,7 @@ inline auto gather_flights(std::string filename)
     buffer << file.rdbuf();
     std::string text { buffer.str() };
 
-    std::priority_queue<Flight, std::vector<Flight>, decltype(comp)> flights { comp };
+    std::priority_queue<Flight, std::vector<Flight>, decltype(comp)> flights {};
 
     // Defining the pattern
     std::regex pattern(R"(\w+\:(\w+) - \w+\:(\d+\h\d*\m*) - \w+\:(\d+) - \w+\:(\d+\h\d*\m*),?(\d+\h\d*\m*)?,?(\d+\h\d*\m*)? - \w+\:(\d+))");
