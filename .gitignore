@@ -1,6 +1,11 @@
+# Folders
 build/
 .DS_Store
 .vscode
+report/
+
+# MSOffice files
+*.docx
 
 # Prerequisites
 *.d
