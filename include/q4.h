@@ -40,11 +40,23 @@ struct Sensor {
     double accuracy;
 };
 
-inline auto accuracySum { [](double sum, Sensor& sensor) { return sum + sensor.accuracy; } };
+inline auto accuracySum {
+    [](double sum, Sensor& sensor) {
+        return sum + sensor.accuracy;
+    }
+};
 
-inline auto weighted_X { [](double sum, Sensor& sensor) { return sum + sensor.pos.x * sensor.accuracy; } };
+inline auto weighted_X {
+    [](double sum, Sensor& sensor) {
+        return sum + sensor.pos.x * sensor.accuracy;
+    }
+};
 
-inline auto weighted_Y { [](double sum, Sensor& sensor) { return sum + sensor.pos.y * sensor.accuracy; } };
+inline auto weighted_Y {
+    [](double sum, Sensor& sensor) {
+        return sum + sensor.pos.y * sensor.accuracy;
+    }
+};
 
 inline Vector2D kalman_filter(std::vector<Sensor> sensors)
 {
@@ -56,6 +68,7 @@ inline Vector2D kalman_filter(std::vector<Sensor> sensors)
      * @return Vector2D
      */
 
+    // Calculating the sum of the accuracies
     double sumOfAccuracies {
         std::accumulate(sensors.begin(),
             sensors.end(),
@@ -63,6 +76,7 @@ inline Vector2D kalman_filter(std::vector<Sensor> sensors)
             accuracySum)
     };
 
+    // Calculating the weighted X coordinate
     double filtered_x_position {
         std::accumulate(sensors.begin(),
             sensors.end(),
@@ -71,6 +85,7 @@ inline Vector2D kalman_filter(std::vector<Sensor> sensors)
         / sumOfAccuracies
     };
 
+    // Calculating the weighted Y coordinate
     double filtered_y_position {
         std::accumulate(sensors.begin(),
             sensors.end(),

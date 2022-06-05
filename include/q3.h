@@ -48,7 +48,8 @@ struct Flight {
 
 inline auto comp {
     [](Flight flight1, Flight flight2) {
-        return flight1.duration + flight1.connection_times + 3 * flight1.price > flight2.duration + flight2.connection_times + 3 * flight2.price;
+        return flight1.duration + flight1.connection_times + 3 * flight1.price
+            > flight2.duration + flight2.connection_times + 3 * flight2.price;
     }
 };
 
@@ -65,11 +66,16 @@ inline size_t timeToMinuteConverter(std::string time)
     if (time.empty())
         return 0;
 
+    // finding the pattern
     std::smatch match {};
     std::regex pattern(R"((\d+)\h(\d+)?\m?)");
     std::regex_search(time, match, pattern);
 
-    return static_cast<size_t>(std::stoi(match[1])) * 60 + (((static_cast<std::string>(match[2])).empty()) ? 0 : static_cast<size_t>(std::stoi(match[2])));
+    // Returning the time in minutes
+    return static_cast<size_t>(std::stoi(match[1])) * 60
+        + (((static_cast<std::string>(match[2])).empty())
+                ? 0
+                : static_cast<size_t>(std::stoi(match[2])));
 }
 
 inline auto gather_flights(std::string filename)
@@ -82,6 +88,7 @@ inline auto gather_flights(std::string filename)
      * @return std::vector<Flight>
      */
 
+    // Working with the file
     std::ifstream file(filename);
 
     if (!file.is_open())
@@ -93,15 +100,20 @@ inline auto gather_flights(std::string filename)
 
     std::priority_queue<Flight, std::vector<Flight>, decltype(comp)> flights { comp };
 
+    // Defining the pattern
     std::regex pattern(R"(\w+\:(\w+) - \w+\:(\d+\h\d*\m*) - \w+\:(\d+) - \w+\:(\d+\h\d*\m*),?(\d+\h\d*\m*)?,?(\d+\h\d*\m*)? - \w+\:(\d+))");
+
     std::smatch match {};
 
+    // Finding the pattern in the text and adding the flights to the queue
     while (std::regex_search(text, match, pattern)) {
         flights.push(Flight {
             match[1],
             timeToMinuteConverter(match[2]),
             static_cast<size_t>(std::stoi(match[3])),
-            timeToMinuteConverter(match[4]) + timeToMinuteConverter(match[5]) + timeToMinuteConverter(match[6]),
+            timeToMinuteConverter(match[4])
+                + timeToMinuteConverter(match[5])
+                + timeToMinuteConverter(match[6]),
             static_cast<size_t>(std::stoi(match[7])) });
 
         text = match.suffix().str();

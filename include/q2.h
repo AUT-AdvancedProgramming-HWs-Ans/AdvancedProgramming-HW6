@@ -51,6 +51,7 @@ inline std::vector<Patient> read_file(std::string filename)
      * @return std::vector<Patient>
      */
 
+    // Working with the file
     std::ifstream file(filename);
 
     if (!file.is_open())
@@ -63,11 +64,17 @@ inline std::vector<Patient> read_file(std::string filename)
 
     std::vector<Patient> patients {};
 
+    // Defining the pattern
     std::regex pattern(R"((\w+) ?\,(\w+) ?\,(\d+)\,(\d+)\,(\d+)\,(\d+))");
+
     std::smatch match {};
 
+    // Finding the pattern in the text and adding the patients to the vector
     while (std::regex_search(txt, match, pattern)) {
-        patients.push_back(Patient { static_cast<std::string>(match[1]) + " " + static_cast<std::string>(match[2]),
+        patients.push_back(Patient {
+            static_cast<std::string>(match[1])
+                + " "
+                + static_cast<std::string>(match[2]),
             static_cast<size_t>(std::stoi(match[3])),
             static_cast<size_t>(std::stoi(match[4])),
             static_cast<size_t>(std::stoi(match[5])),
@@ -90,7 +97,14 @@ inline auto cancerPossibilityComparsion {
          * @return bool
          */
 
-        auto possibilityOfCancer { [](const Patient& patient) { return 3 * patient.age + 5 * patient.smokes + 2 * patient.area_q + 4 * patient.alkhol; } };
+        // Defining the inner lambda function
+        // to calculate the possibility of cancer
+        auto possibilityOfCancer {
+            [](const Patient& patient) { return 3 * patient.age
+                                             + 5 * patient.smokes
+                                             + 2 * patient.area_q
+                                             + 4 * patient.alkhol; }
+        };
 
         return possibilityOfCancer(patient1) > possibilityOfCancer(patient2);
     }
