@@ -35,6 +35,6 @@ namespace q1
 
         return x;
     }
-}
+} // namespace q1
 
 #endif // Q1_H

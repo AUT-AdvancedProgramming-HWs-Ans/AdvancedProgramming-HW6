@@ -43,7 +43,7 @@ namespace q2
         size_t alkhol;
     };
 
-    static std::vector<Patient> read_file(std::string filename)
+    inline std::vector<Patient> read_file(std::string filename)
     {
         /**
          * @brief read file and return a vector of patients
@@ -58,14 +58,14 @@ namespace q2
         if (!file.is_open())
             throw std::runtime_error("Could not open file");
 
-        std::stringstream buffer;
+        std::stringstream buffer{};
         buffer << file.rdbuf();
 
         std::string txt{buffer.str()};
 
         std::vector<Patient> patients{};
 
-        std::regex pattern(R"((\w+) ?,(\w+) ?,(\d+),(\d+),(\d+),(\d+))");
+        std::regex pattern(R"((\w+) ?\,(\w+) ?\,(\d+)\,(\d+)\,(\d+)\,(\d+))");
         std::smatch match{};
 
         while (std::regex_search(txt, match, pattern))
@@ -84,7 +84,7 @@ namespace q2
         return patients;
     }
 
-    static auto cancerPossibilityCompersion{
+    inline auto cancerPossibilityComparsion{
         [](const Patient &patient1, const Patient &patient2)
         {
             /**
@@ -105,7 +105,7 @@ namespace q2
             return possibilityOfCancer(patient1) > possibilityOfCancer(patient2);
         }};
 
-    static void sort(std::vector<Patient> &patients)
+    inline void sort(std::vector<Patient> &patients)
     {
         /**
          * @brief sort the vector of patients
@@ -115,7 +115,7 @@ namespace q2
          * @return std::vector<Patient>
          */
 
-        std::sort(patients.begin(), patients.end(), cancerPossibilityCompersion);
+        std::sort(patients.begin(), patients.end(), cancerPossibilityComparsion);
     }
 
 } // namespace q2
